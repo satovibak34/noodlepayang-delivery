@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สั่งก๋วยเตี๋ยวเดลิเวอรี่ - ก๋วยเตี๋ยวป่ายาง@บ่อแสน</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍜 ก๋วยเตี๋ยวป่ายาง@บ่อแสน</h1>
+            <p>สั่งเดลิเวอรี่ ส่งตรงถึงหน้าบ้านคุณ!</p>
+        </header>
+
+        <main>
+            <section class="menu-section">
+                <h2>เมนูแนะนำ</h2>
+                <div class="menu-grid" id="menuList">
+                    <!-- รายการเมนูจะถูกสร้างด้วย JavaScript หรือใส่ HTML ตรงนี้ -->
+                    <div class="menu-item">
+                        <h3>เส้นเล็กต้มยำน้ำข้น</h3>
+                        <p>ราคา 50 บาท</p>
+                        <button onclick="addToCart('เส้นเล็กต้มยำน้ำข้น', 50)">1</button>
+                    </div>
+                    <div class="menu-item">
+                        <h3>เส้นหมี่แห้งหมูตุ๋น</h3>
+                        <p>ราคา 50 บาท</p>
+                        <button onclick="addToCart('เส้นหมี่แห้งหมูตุ๋น', 50)">1</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cart-section">
+                <h2>🛒 ตะกร้าสินค้าของคุณ</h2>
+                <ul id="cartItems">
+                    <li>ยังไม่มีสินค้าในตะกร้า</li>
+                </ul>
+                <p><strong>ยอดรวม: <span id="totalPrice">0</span> บาท</strong></p>
+                
+                <div class="form-group">
+                    <label>ชื่อผู้สั่ง:</label>
+                    <input type="text" id="customerName" placeholder="ระบุชื่อของคุณ">
+                </div>
+                <div class="form-group">
+                    <label>เบอร์โทรศัพท์:</label>
+                    <input type="tel" id="customerPhone" placeholder="เบอร์โทรติดต่อ">
+                </div>
+                <div class="form-group">
+                    <label>ที่อยู่จัดส่ง:</label>
+                    <textarea id="customerAddress" placeholder="ระบุพิกัด / บ้านเลขที่ ในเขตบ่อแสน"></textarea>
+                </div>
+
+                <button class="checkout-btn" onclick="sendOrder()">ยืนยันการสั่งซื้อ</button>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
