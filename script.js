@@ -1,61 +1,158 @@
-let cart = [];
-let total = 0;
-
-function addToCart(name, price) {
-    cart.push({ name, price });
-    updateCartUI();
+* {
+    box-sizing: border-box;
+    font-family: 'Prompt', sans-serif;
 }
-
-function updateCartUI() {
-    const cartList = document.getElementById('cartItems');
-    const totalPriceEl = document.getElementById('totalPrice');
-    
-    cartList.innerHTML = '';
-    total = 0;
-
-    if (cart.length === 0) {
-        cartList.innerHTML = '<li>ยังไม่มีสินค้าในตะกร้า</li>';
-    } else {
-        cart.forEach((item, index) => {
-            total += item.price;
-            let li = document.createElement('li');
-            li.textContent = `${item.name} - ${item.price} บาท`;
-            cartList.appendChild(li);
-        });
-    }
-    totalPriceEl.textContent = total;
+body {
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 0;
+    color: #333;
 }
-
-function sendOrder() {
-    let name = document.getElementById('customerName').value;
-    let phone = document.getElementById('customerPhone').value;
-    let address = document.getElementById('customerAddress').value;
-
-    if (cart.length === 0) {
-        alert('กรุณาเลือกเมนูก๋วยเตี๋ยวก่อนครับ!');
-        return;
-    }
-    if (!name || !phone || !address) {
-        alert('กรุณากรอกชื่อ เบอร์โทร และที่อยู่จัดส่งให้ครบถ้วนครับ');
-        return;
-    }
-
-    let orderText = `📦 *มีออเดอร์ใหม่จากเว็บเดลิเวอรี่!*\n\n`;
-    cart.forEach(item => {
-        orderText += `- ${item.name} (${item.price} บาท)\n`;
-    });
-    orderText += `\n💰 *ยอดรวม:* ${total} บาท\n`;
-    orderText += `👤 *ชื่อ:* ${name}\n`;
-    orderText += `📞 *โทร:* ${phone}\n`;
-    orderText += `📍 *ที่อยู่:* ${address}\n`;
-
-    // ตัวอย่าง: ส่งข้อมูลเข้า LINE หรือเปิด WhatsApp / หน้าต่างสรุป
-    let encodedText = encodeURIComponent(orderText);
-    
-    // หากต้องการส่งเข้า LINE ของร้านโดยตรง (เปลี่ยนเบอร์โทรเป็นเบอร์ร้าน หรือใช้ LINE OA Link)
-    // หรือเด้งไปหน้าสรุปเพื่อก๊อปปี้ส่งแชท
-    alert('สร้างออเดอร์สำเร็จ! ระบบจะพาคุณไปสรุปข้อมูลส่งร้าน');
-    
-    // ตัวอย่างเปิด Line ส่งข้อความหาตัวเองหรือร้าน (ใส่เบอร์ร้านแทนที่เบอร์ด้านล่าง)
-    window.open(`https://line.me/R/msg/text/?${encodedText}`, '_blank');
+.shop-banner {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+.shop-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.shop-info {
+    background: #fff;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.shop-info h1 {
+    margin: 0;
+    color: #d9534f;
+}
+.status {
+    color: #28a745;
+    font-size: 14px;
+    margin-top: 5px;
+}
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+h2 {
+    font-size: 18px;
+    border-left: 4px solid #d9534f;
+    padding-left: 10px;
+    margin-bottom: 15px;
+}
+.menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+.menu-card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.menu-card img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+}
+.menu-details {
+    padding: 10px;
+    text-align: center;
+}
+.menu-details h3 {
+    font-size: 14px;
+    margin: 0 0 5px 0;
+}
+.price {
+    color: #d9534f;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.menu-card button {
+    background: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    width: 100%;
+}
+.menu-card button:active {
+    background: #b52b27;
+}
+.cart-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+#cartList {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 15px 0;
+    max-height: 150px;
+    overflow-y: auto;
+}
+#cartList li {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+.empty-cart {
+    color: #999;
+    text-align: center;
+}
+.total-box {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    border-top: 2px dashed #eee;
+    padding-top: 10px;
+    margin-bottom: 15px;
+}
+.total-box strong {
+    color: #d9534f;
+}
+.checkout-form .form-group {
+    margin-bottom: 10px;
+}
+.checkout-form label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+.checkout-form input, .checkout-form textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.order-btn {
+    width: 100%;
+    background: #28a745;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.order-btn:active {
+    background: #218838;
 }
