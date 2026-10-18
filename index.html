@@ -3,58 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>สั่งก๋วยเตี๋ยวเดลิเวอรี่ - ก๋วยเตี๋ยวป่ายาง@บ่อแสน</title>
+    <title>สั่งก๋วยเตี๋ยวออนไลน์ - ก๋วยเตี๋ยวป่ายาง@บ่อแสน</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts สำหรับฟอนต์ไทยสวยๆ -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🍜 ก๋วยเตี๋ยวป่ายาง@บ่อแสน</h1>
-            <p>สั่งเดลิเวอรี่ ส่งตรงถึงหน้าบ้านคุณ!</p>
-        </header>
 
-        <main>
-            <section class="menu-section">
-                <h2>เมนูแนะนำ</h2>
-                <div class="menu-grid" id="menuList">
-                    <!-- รายการเมนูจะถูกสร้างด้วย JavaScript หรือใส่ HTML ตรงนี้ -->
-                    <div class="menu-item">
+    <!-- ส่วนหัวร้าน -->
+    <header class="shop-header">
+        <div class="shop-banner">
+            <!-- ใส่รูปร้านหรือโลโก้ตรง src -->
+            <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800" alt="ก๋วยเตี๋ยวป่ายาง@บ่อแสน" class="shop-img">
+        </div>
+        <div class="shop-info">
+            <h1>🍜 ก๋วยเตี๋ยวป่ายาง@บ่อแสน</h1>
+            <p class="status">🟢 เปิดรับออเดอร์เดลิเวอรี่ (ส่งในเขตบ่อแสน)</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- รายการเมนู -->
+        <section class="menu-section">
+            <h2>📜 เมนูแนะนำ</h2>
+            <div class="menu-grid" id="menuGrid">
+                <!-- เมนูที่ 1 -->
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1612929633738-8fe46f7ec841?w=400" alt="เส้นเล็กต้มยำน้ำข้น">
+                    <div class="menu-details">
                         <h3>เส้นเล็กต้มยำน้ำข้น</h3>
-                        <p>ราคา 50 บาท</p>
-                        <button onclick="addToCart('เส้นเล็กต้มยำน้ำข้น', 50)">1</button>
-                    </div>
-                    <div class="menu-item">
-                        <h3>เส้นหมี่แห้งหมูตุ๋น</h3>
-                        <p>ราคา 50 บาท</p>
-                        <button onclick="addToCart('เส้นหมี่แห้งหมูตุ๋น', 50)">1</button>
+                        <p class="price">50 บาท</p>
+                        <button onclick="addToCart('เส้นเล็กต้มยำน้ำข้น', 50)">+ เพิ่มลงตะกร้า</button>
                     </div>
                 </div>
-            </section>
 
-            <section class="cart-section">
-                <h2>🛒 ตะกร้าสินค้าของคุณ</h2>
-                <ul id="cartItems">
-                    <li>ยังไม่มีสินค้าในตะกร้า</li>
-                </ul>
-                <p><strong>ยอดรวม: <span id="totalPrice">0</span> บาท</strong></p>
-                
+                <!-- เมนูที่ 2 -->
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400" alt="เส้นหมี่แห้งหมูตุ๋น">
+                    <div class="menu-details">
+                        <h3>เส้นหมี่แห้งหมูตุ๋น</h3>
+                        <p class="price">50 บาท</p>
+                        <button onclick="addToCart('เส้นหมี่แห้งหมูตุ๋น', 50)">+ เพิ่มลงตะกร้า</button>
+                    </div>
+                </div>
+
+                <!-- เมนูที่ 3 -->
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400" alt="บะหมี่แห้งต้มยำ">
+                    <div class="menu-details">
+                        <h3>บะหมี่แห้งต้มยำ</h3>
+                        <p class="price">55 บาท</p>
+                        <button onclick="addToCart('บะหมี่แห้งต้มยำ', 55)">+ เพิ่มลงตะกร้า</button>
+                    </div>
+                </div>
+
+                <!-- เมนูที่ 4 -->
+                <div class="menu-card">
+                    <img src="https://images.unsplash.com/photo-1552611052-33e04de081de?w=400" alt="เก๊กฮวยเย็นๆ">
+                    <div class="menu-details">
+                        <h3>น้ำเก๊กฮวย (แก้ว)</h3>
+                        <p class="price">20 บาท</p>
+                        <button onclick="addToCart('น้ำเก๊กฮวย', 20)">+ เพิ่มลงตะกร้า</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ตะกร้าสินค้า -->
+        <section class="cart-section">
+            <h2>🛒 ตะกร้าสินค้าของคุณ</h2>
+            <ul id="cartList">
+                <li class="empty-cart">ยังไม่มีสินค้าในตะกร้า</li>
+            </ul>
+            <div class="total-box">
+                <span>ยอดรวมทั้งสิ้น:</span>
+                <strong><span id="totalPrice">0</span> บาท</strong>
+            </div>
+
+            <!-- ฟอร์มข้อมูลลูกค้า -->
+            <div class="checkout-form">
+                <h3>📍 ข้อมูลการจัดส่ง</h3>
                 <div class="form-group">
-                    <label>ชื่อผู้สั่ง:</label>
-                    <input type="text" id="customerName" placeholder="ระบุชื่อของคุณ">
+                    <label>ชื่อ-นามสกุล:</label>
+                    <input type="text" id="custName" placeholder="ระบุชื่อผู้รับ">
                 </div>
                 <div class="form-group">
                     <label>เบอร์โทรศัพท์:</label>
-                    <input type="tel" id="customerPhone" placeholder="เบอร์โทรติดต่อ">
+                    <input type="tel" id="custPhone" placeholder="เบอร์โทรติดต่อ">
                 </div>
                 <div class="form-group">
-                    <label>ที่อยู่จัดส่ง:</label>
-                    <textarea id="customerAddress" placeholder="ระบุพิกัด / บ้านเลขที่ ในเขตบ่อแสน"></textarea>
+                    <label>ที่อยู่จัดส่ง / ปักหมุด:</label>
+                    <textarea id="custAddress" rows="3" placeholder="บ้านเลขที่, จุดสังเกต หรือลิงก์ Google Maps"></textarea>
                 </div>
 
-                <button class="checkout-btn" onclick="sendOrder()">ยืนยันการสั่งซื้อ</button>
-            </section>
-        </main>
+                <button class="order-btn" onclick="sendOrderToLine()">🚀 ยืนยันการสั่งซื้อ (ส่งเข้าร้าน)</button>
+            </div>
+        </section>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
