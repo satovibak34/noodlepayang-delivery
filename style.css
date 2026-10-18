@@ -1,76 +1,66 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    margin: 0;
-    padding: 20px;
+let cart = [];
+
+function addToCart(name, price) {
+    cart.push({ name, price });
+    updateCartUI();
 }
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+function updateCartUI() {
+    const cartList = document.getElementById('cartList');
+    const totalPriceEl = document.getElementById('totalPrice');
+    
+    cartList.innerHTML = '';
+    
+    if (cart.length === 0) {
+        cartList.innerHTML = '<li class="empty-cart">ยังไม่มีสินค้าในตะกร้า</li>';
+        totalPriceEl.textContent = '0';
+        return;
+    }
+
+    let total = 0;
+    cart.forEach((item, index) => {
+        total += item.price;
+        let li = document.ion ? document.createElement('li') : document.createElement('li');
+        li.innerHTML = `<span>${item.name}</span> <span>${item.price} บาท <button onclick="removeItem(${index})" style="background:none;border:none;color:red;cursor:pointer;">❌</button></span>`;
+        cartList.appendChild(li);
+    });
+
+    totalPriceEl.textContent = total;
 }
-header {
-    text-align: center;
-    margin-bottom: 20px;
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    updateCartUI();
 }
-header h1 {
-    color: #d9534f;
-    margin-bottom: 5px;
-}
-.menu-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-.menu-item {
-    background: #fff5f5;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #ffd6d6;
-    text-align: center;
-}
-.menu-item button {
-    background: #d9534f;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-.cart-section {
-    border-top: 2px dashed #eee;
-    padding-top: 15px;
-}
-.form-group {
-    margin-bottom: 10px;
-}
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-.form-group input, .form-group textarea {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-.checkout-btn {
-    width: 100%;
-    background: #5cb85c;
-    color: white;
-    border: none;
-    padding: 12px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 10px;
+
+function sendOrderToLine() {
+    let name = document.getElementById('custName').value.trim();
+    let phone = document.getElementById('custPhone').value.trim();
+    let address = document.getElementById('custAddress').value.trim();
+
+    if (cart.length === 0) {
+        alert('กรุณาเลือกเมนูก๋วยเตี๋ยวก่อนครับ!');
+        return;
+    }
+    if (!name || !phone || !address) {
+        alert('กรุณากรอกชื่อ เบอร์โทร และที่อยู่จัดส่งให้ครบถ้วนครับ');
+        return;
+    }
+
+    let orderText = `📦 *มีออเดอร์ใหม่จากเว็บเดลิเวอรี่!*\n\n`;
+    let total = 0;
+    cart.forEach(item => {
+        orderText += `- ${item.name} (${item.price} บาท)\n`;
+        total += item.price;
+    });
+    orderText += `\n💰 *ยอดรวมทั้งสิ้น:* ${total} บาท\n`;
+    orderText += `--------------------------\n`;
+    orderText += `👤 *ชื่อลูกค้า:* ${name}\n`;
+    orderText += `📞 *เบอร์โทร:* ${phone}\n`;
+    orderText += `📍 *ที่อยู่/พิกัด:* ${address}\n`;
+
+    let encodedText = encodeURIComponent(orderText);
+    
+    // ระบบจะเด้งส่งข้อมูลเข้าแชท LINE ของร้านอัตโนมัติทันที
+    window.open(`https://line.me/R/msg/text/?${encodedText}`, '_blank');
 }
